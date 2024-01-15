@@ -1,0 +1,40 @@
+[project]
+name = "py-resource-monitor"
+version = "0.0"
+requires-python = ">=3.7"
+dependencies = ['psutil >= 5.6.0', 'numpy']
+
+[tool.setuptools]
+packages = ["resource_monitor"]
+
+[project.optional-dependencies]
+gpu = ['pynvml']
+
+[tool.pylint.FORMAT]
+
+# Expected format of line ending, e.g. empty (any line ending), LF or CRLF.
+expected-line-ending-format = ''
+
+# Number of spaces of indent required inside a hanging or continued line.
+indent-after-paren = 4
+
+# String used as indentation unit. This is usually "    " (4 spaces) or "\t" (1
+# tab).
+indent-string = '    '
+
+# Maximum number of characters on a single line.
+max-line-length = 120
+
+# Maximum number of lines in a module.
+max-module-lines = 1000
+
+# Allow the body of a class to be on the same line as the declaration if body
+# contains single statement.
+single-line-class-stmt = 'no'
+
+# Allow the body of an if to be on the same line as the test if there is no
+# else.
+single-line-if-stmt = 'no'
+
+# exclude tests
+ignore-patterns='test_.*?py'
