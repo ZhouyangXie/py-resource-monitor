@@ -4,7 +4,6 @@
 """
 from .event_logger import EventLogger
 from .resource_logger import ResourceLogger
-from .gpu_logger import GpuLogger
 from .utils import setup_root_resource_logger, setup_root_event_logger,\
     get_root_event_logger, monitor_function, monitor_region
 
@@ -12,7 +11,6 @@ from .utils import setup_root_resource_logger, setup_root_event_logger,\
 __all__ = [
     EventLogger.__name__,
     ResourceLogger.__name__,
-    GpuLogger.__name__,
     setup_root_event_logger.__name__,
     setup_root_resource_logger.__name__,
     get_root_event_logger.__name__,

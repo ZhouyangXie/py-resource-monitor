@@ -99,9 +99,10 @@ def monitor_function(
             else:
                 assert isinstance(event_logger, EventLogger)
             call_counter += 1
-            event_logger.log_start(function_name, call_counter)
+            my_counter = call_counter
+            event_logger.log_start(function_name, my_counter)
             results = func(*args, **kwargs)
-            event_logger.log_end(function_name, call_counter)
+            event_logger.log_end(function_name, my_counter)
             return results
 
         return func_wrapper
@@ -127,11 +128,13 @@ class MonitorRegion:
         else:
             MonitorRegion.counter[self.region_name] = 1
 
+        self.count = MonitorRegion.counter[self.region_name]
+
     def __enter__(self):
-        self.event_logger.log_start(self.region_name, MonitorRegion.counter[self.region_name])
+        self.event_logger.log_start(self.region_name, self.count)
 
     def __exit__(self, *_):
-        self.event_logger.log_end(self.region_name, MonitorRegion.counter[self.region_name])
+        self.event_logger.log_end(self.region_name, self.count)
 
 
 def monitor_region(region_name, event_logger=None):
