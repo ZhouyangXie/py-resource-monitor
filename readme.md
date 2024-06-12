@@ -24,7 +24,7 @@ Optional dependencies:
 
 ### How to Use
 #### To Monitor Processes
-"""sh
+```sh
 usage: __main__.py [-h] --pid PID [--output OUTPUT] [--gpu_ids GPU_IDS] [--interval INTERVAL]
 
 optional arguments:
@@ -33,13 +33,13 @@ optional arguments:
   --output OUTPUT      Output file. If not provided, output to stdout.
   --gpu_ids GPU_IDS    GPU indices to monitor. If not provided, do not monitor GPUs.
   --interval INTERVAL  Time interval (second) between recording. Defaults to 1.0
-"""
+```
 
 For example, to monitor running processes PID 1234 and 4321 with GPU utility on GPU 0-3 and output the result to resources.log:
 
-"""sh
+```sh
 python -m resource_monitor --pid 1234,4321 --gpus 0,1,2,3 --output resources.log
-"""
+```
 
 The monitor process finishes when process 1234 and 4321 are all finished, or stopped manually by Ctrl+C/Z.
 
