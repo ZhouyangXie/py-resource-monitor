@@ -18,14 +18,14 @@ Dependencies:
 * numpy
 
 Optional dependencies:
-* pynvml (if you want to monitor NVidia GPU)
+* pynvml (to monitor NVidia GPU)
 * matplotlib (to run `print_report.py`)
 * pytorch (to run `example.py` with GPU).
 
 ### How to Use
 #### To Monitor Processes
 ```sh
-usage: __main__.py [-h] --pid PID [--output OUTPUT] [--gpu_ids GPU_IDS] [--interval INTERVAL]
+usage: python -m resource_monitor [-h] --pid PID [--output OUTPUT] [--gpu_ids GPU_IDS] [--interval INTERVAL]
 
 optional arguments:
   -h, --help           show this help message and exit
@@ -45,6 +45,13 @@ The monitor process finishes when process 1234 and 4321 are all finished, or sto
 
 The recorded resource usage will be the sum of all monitored processes.
 
+#### To Monitor Overall Usage
+
+Like above, just omit the `pid` argument:
+```sh
+python -m resource_monitor --gpu_ids 0,1,2,3 --output resources.log
+```
+
 #### To Monitor Python Code
 See `example.py`. It's well-commented and simple enough.
 
@@ -54,6 +61,41 @@ Last, see `print_report.py`(simple, too) and run it. It will print and plot what
 * Print the mean duration of the monitored functions & code-blocks.
 * Print the system resource overview.
 * Plot the time v.s. resource-usage curves in a `.png` image.
+
+Example output:
+```
+event: my_func, mean elapse: 7.7356e+00 s
+event: load numpy array, mean elapse: 2.1179e-02 s
+machine resource information:
+logger_process_pid :  12073
+cpu_count :  8
+vm_total_mb :  15755
+vm_available_mb :  10583
+swap_total_mb :  4095
+swap_free_mb :  4095
+gpu_0_total_mb :  6144
+gpu_0_free_mb :  5930
+cpu_percent  peak:  109.6  average:  34.693333333333335
+cpu_percent_global  peak:  29.4  average:  3.5173333333333336
+rss_mb  peak:  836  average:  577.8133333333334
+vms_mb  peak:  9305  average:  8064.626666666667
+vms_global_mb  peak:  4567  average:  4344.133333333333
+swap_used_mb  peak:  0  average:  0.0
+read_count  peak:  2468  average:  2202.9333333333334
+read_count_global  peak:  65118  average:  65118.0
+read_mb  peak:  0  average:  0.0
+read_mb_global  peak:  2254  average:  2254.0
+write_count  peak:  40  average:  27.093333333333334
+write_count_global  peak:  39961  average:  39890.09333333333
+write_mb  peak:  1199  average:  537.32
+write_mb_global  peak:  978  average:  973.5066666666667
+gpu_0_mem_mb  peak:  592  average:  497.28
+gpu_0_mem_mb_global  peak:  808  average:  712.9733333333334
+gpu_0_utilization_percent_global  peak:  10  average:  4.866666666666666
+```
+Example usage plot:
+
+![plot](resource_usage.png "Plot by print_report.py")
 
 ### What's Monitored
 
