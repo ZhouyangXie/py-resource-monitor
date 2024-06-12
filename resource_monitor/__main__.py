@@ -21,9 +21,9 @@ if __name__ == "__main__":
         help="Time interval (second) between recording. Defaults to 1.0"
     )
     args = parser.parse_args()
-    pids = [int(pid) for pid in args.pid.spilt(",")]
+    pids = [int(pid) for pid in args.pid.split(",")]
     output = args.output if len(args.output) > 0 else None
     interval = args.interval
     assert interval > 0
-    gpu_ids = [int(i) for i in args.gpu_ids.spilt(",")] if len(args.gpu_ids) > 0 else []
+    gpu_ids = [int(i) for i in args.gpu_ids.split(",")] if len(args.gpu_ids) > 0 else []
     ResourceLogger(pid=pids, output=output, interval=args.interval, gpu_ids=gpu_ids).run()
