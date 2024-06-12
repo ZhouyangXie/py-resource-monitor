@@ -16,14 +16,37 @@ Dependencies:
 * Python >= 3.7
 * psutil >= 5.3.0
 * numpy
+
 Optional dependencies:
 * pynvml (if you want to monitor NVidia GPU)
 * matplotlib (to run `print_report.py`)
 * pytorch (to run `example.py` with GPU).
 
 ### How to Use
+#### To Monitor Processes
+"""sh
+usage: __main__.py [-h] --pid PID [--output OUTPUT] [--gpu_ids GPU_IDS] [--interval INTERVAL]
 
-First, see `example.py`. It's well commented and simple enough.
+optional arguments:
+  -h, --help           show this help message and exit
+  --pid PID            Process PID separated by comma, like "1,2,3"
+  --output OUTPUT      Output file. If not provided, output to stdout.
+  --gpu_ids GPU_IDS    GPU indices to monitor. If not provided, do not monitor GPUs.
+  --interval INTERVAL  Time interval (second) between recording. Defaults to 1.0
+"""
+
+For example, to monitor running processes PID 1234 and 4321 with GPU utility on GPU 0-3 and output the result to resources.log:
+
+"""sh
+python -m resource_monitor --pid 1234,4321 --gpus 0,1,2,3 --output resources.log
+"""
+
+The monitor process finishes when process 1234 and 4321 are all finished, or stopped manually by Ctrl+C/Z.
+
+The recorded resource usage will be the sum of all monitored processes.
+
+#### To Monitor Python Code
+See `example.py`. It's well-commented and simple enough.
 
 Then, run `example.py`, two log files will be generated. It contains time-series information about your monitored events and resources.
 
