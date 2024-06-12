@@ -28,6 +28,7 @@ if __name__ == "__main__":
     fig = plt.figure(figsize=(5 * len(resource_usage), 5), facecolor="w")
     axes = fig.subplots(ncols=len(resource_usage), nrows=1)
     for i, (resource_name, usage) in enumerate(resource_usage.items()):
+        print(resource_name, " peak: ", usage.max(), " average: ", usage.mean(), )
         ax = axes[i]
         ax.set_title(resource_name + " usage")
         ax.set_xlabel("time(s)")

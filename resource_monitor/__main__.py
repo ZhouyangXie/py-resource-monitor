@@ -7,7 +7,8 @@ from .resource_logger import ResourceLogger
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--pid", type=str, required=True, help="Process PID separated by comma, like \"1,2,3\"")
+        "--pid", type=str, required=False, default=None,
+        help="Process PID separated by comma, like \"1,2,3\". If not given, monitor current process.")
     parser.add_argument(
         "--output", type=str, required=False, default="",
         help="Output file. If not provided, output to stdout."
@@ -21,7 +22,7 @@ if __name__ == "__main__":
         help="Time interval (second) between recording. Defaults to 1.0"
     )
     args = parser.parse_args()
-    pids = [int(pid) for pid in args.pid.split(",")]
+    pids = [int(pid) for pid in args.pid.split(",")] if args.pid is not None else None
     output = args.output if len(args.output) > 0 else None
     interval = args.interval
     assert interval > 0
