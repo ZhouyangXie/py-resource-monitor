@@ -139,7 +139,7 @@ class ResourceLogger:
         ]
         if self.gpu_logger is not None:
             for i in self.gpu_ids:
-                headers.extend([f"gpu_{i}_mem_mb", f"gpu_{i}_mem_mb_global"])
+                headers.extend([f"gpu_{i}_mem_mb", f"gpu_{i}_mem_mb_global", f"gpu_{i}_utilization_percent_global"])
         self.output.write(",".join(headers) + "\n")
 
         self.output.flush()
@@ -197,12 +197,14 @@ class ResourceLogger:
         )  # write_mb
         numbers.append(global_io_counter.write_bytes // MEGABYTE)  # write_mb_global
         if self.gpu_logger is not None:
-            for process_used, global_used in zip(
-                self.gpu_logger.get_process_used(), self.gpu_logger.get_used()
+            for process_used, global_used, utilization in zip(
+                self.gpu_logger.get_process_used(),
+                self.gpu_logger.get_used(),
+                self.gpu_logger.get_utilization(),
             ):
                 numbers.extend(
-                    [process_used // MEGABYTE, global_used // MEGABYTE]
-                )  # "gpu_{i}_mem_mb", f"gpu_{i}_mem_mb_global"
+                    [process_used // MEGABYTE, global_used // MEGABYTE, utilization]
+                )  # "gpu_{i}_mem_mb", "gpu_{i}_mem_mb_global", "gpu_{i}_utilization_global"
 
         return numbers
 

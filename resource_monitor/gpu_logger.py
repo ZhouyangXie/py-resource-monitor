@@ -3,7 +3,8 @@ from typing import Sequence, List
 
 from pynvml import ( # type: ignore
     nvmlInit, nvmlDeviceGetHandleByIndex,
-    nvmlDeviceGetMemoryInfo, nvmlDeviceGetComputeRunningProcesses
+    nvmlDeviceGetMemoryInfo, nvmlDeviceGetComputeRunningProcesses,
+    nvmlDeviceGetUtilizationRates
 )
 
 
@@ -45,6 +46,10 @@ class GpuLogger:
     def get_free(self) -> List[int]:
         """ get free memory of each GPU in bytes """
         return [nvmlDeviceGetMemoryInfo(h).free for h in self.handles]
+
+    def get_utilization(self) -> List[float]:
+        """ get GPU kernel utilization percent """
+        return [nvmlDeviceGetUtilizationRates(h).gpu for h in self.handles]
 
     def get_process_used(self) -> List[int]:
         """ get used memory (by the processes under monitoring) of each GPU in bytes """
